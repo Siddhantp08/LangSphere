@@ -1,4 +1,3 @@
-# Step1: Define state
 from typing_extensions import TypedDict
 from typing import Annotated, Literal
 from langgraph.graph.message import add_messages
@@ -9,7 +8,6 @@ load_dotenv()
 class State(TypedDict):
     messages: Annotated[list, add_messages]
 
-# Step2: Define ToolNode & Tools
 from arxiv_tool import *
 from read_pdf import *
 from write_pdf import * 
@@ -19,16 +17,13 @@ tools = [arxiv_search, read_pdf, render_latex_pdf]
 tool_node = ToolNode(tools)
 
 
-# Step3: Setup LLM
 import os
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 model = ChatGoogleGenerativeAI(model="gemini-2.5-pro", api_key=os.getenv("GOOGLE_API_KEY")).bind_tools(tools)
 model = model.bind_tools(tools)
 
-# Step4: Setup graph
 
-#from langgraph.prebuilt import ToolNode
 from langgraph.graph import END, START, StateGraph
 
 def call_model(state: State):
@@ -57,7 +52,6 @@ config = {"configurable": {"thread_id": 222222}}
 
 graph = workflow.compile(checkpointer=checkpointer)
 
-# Step5: TESTING
 INITIAL_PROMPT = """
 You are an expert researcher in the fields of physics, mathematics,
 computer science, quantitative biology, quantitative finance, statistics,
