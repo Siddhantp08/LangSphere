@@ -1,4 +1,3 @@
-# Step1: Install & Import dependencies
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.prebuilt import create_react_agent
 from arxiv_tool import arxiv_search
@@ -9,14 +8,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Step2: Setup LLM and tools
+
 tools = [arxiv_search, read_pdf, render_latex_pdf]
 model = ChatGoogleGenerativeAI(model="gemini-2.5-pro", api_key=os.getenv("GOOGLE_API_KEY"))
 
-# Step3: Create the ReAct agent graph
 graph = create_react_agent(model, tools=tools)
 
-# Step4: Run the agent with an initial prompt
 
 INITIAL_PROMPT = """
 You are an expert researcher in the fields of physics, mathematics,
