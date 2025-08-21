@@ -116,4 +116,3 @@ Apache-2.0 (see `LICENSE`)
 
 ## Repository
 `https://github.com/Siddhantp08/LangSphere`
-```
