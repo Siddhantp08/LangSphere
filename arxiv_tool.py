@@ -1,6 +1,5 @@
 import requests
 
-
 def search_arxiv_papers(topic: str, max_results: int = 5) -> dict:
     query = "+".join(topic.lower().split())
     for char in list('()" '):
@@ -43,13 +42,12 @@ def parse_arxiv_xml(xml_content: str) -> dict:
             for author in entry.findall("atom:author", ns)
         ]
         
-        # Extract categories (term attribute)
         categories = [
             cat.attrib.get("term")
             for cat in entry.findall("atom:category", ns)
         ]
         
-        # Extract PDF link (rel="related" and type="application/pdf")
+
         pdf_link = None
         for link in entry.findall("atom:link", ns):
             if link.attrib.get("type") == "application/pdf":
